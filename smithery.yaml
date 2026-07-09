@@ -1,0 +1,23 @@
+# Smithery configuration for hub-equity-mcp
+# https://smithery.ai/docs/build/project-config
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      hubequityApiKey:
+        type: string
+        title: Hub-Equity API key
+        description: >-
+          Optional hubq_ API key. Unlocks premium (Pro/Enterprise) tools and
+          raises the rate limit. Omit to run anonymously (60 requests/minute,
+          base tools only).
+    required: []
+  commandFunction: |-
+    (config) => ({
+      command: 'uvx',
+      args: ['hub-equity-mcp'],
+      env: config.hubequityApiKey
+        ? { HUBEQUITY_API_KEY: config.hubequityApiKey }
+        : {}
+    })
